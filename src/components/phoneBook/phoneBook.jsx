@@ -1,41 +1,38 @@
-import { useState } from 'react';
 import { nanoid } from 'nanoid';
 
 import { Form, Label, Button, Input } from './phoneBook.module';
+import { addContact } from '../../redux/contactsSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import toast from 'react-hot-toast';
+import { getContacts } from '../../redux/selectors';
 
-export const PhoneBook = ({ onSubmit }) => {
-  const [number, setNumber] = useState();
-  const [name, setName] = useState();
+export const PhoneBook = () => {
+  const contacts = useSelector(getContacts);
 
-  const reset = () => {
-    setName('');
-    setNumber('');
-  };
+  const dispatch = useDispatch();
 
-  const SubmitForm = event => {
-    event.preventDefault();
+  const checkDublicate = name => {
+    if (
+      contacts.some(
+        contact => contact.name.toLowerCase() === name.toLowerCase()
+      )
+    ) {
+      toast.error(`${name} is already in contacts`);
 
-    onSubmit(name, number);
-    setName('');
-    setNumber('');
-    reset();
-  };
-
-  const ChangeForm = e => {
-    const { name, value } = e.target;
-    switch (name) {
-      case 'name':
-        setName(value);
-        break;
-
-      case 'number':
-        setNumber(value);
-        break;
-
-      default:
-        return;
+      return;
     }
   };
+
+  const SubmitForm = values => {
+    const { name, number } = values;
+
+    checkDublicate(name);
+
+    dispatch(addContact(name, number));
+
+    toast.success(`${name} has succesfully added to your phonebook`);
+  };
+
   const nameId = nanoid();
   const numberId = nanoid();
 
@@ -48,8 +45,8 @@ export const PhoneBook = ({ onSubmit }) => {
           name="name"
           pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
           title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
-          value={name}
-          onChange={ChangeForm}
+          // value={name}
+          // onChange={ChangeForm}
           required
         />
       </Label>
@@ -61,8 +58,8 @@ export const PhoneBook = ({ onSubmit }) => {
           name="number"
           pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
           title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
-          value={number}
-          onChange={ChangeForm}
+          // value={number}
+          // onChange={ChangeForm}
           required
         />
       </Label>

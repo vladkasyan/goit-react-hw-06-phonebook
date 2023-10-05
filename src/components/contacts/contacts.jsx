@@ -1,27 +1,42 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { List, Listitem, Listbutton } from './contacts.module';
+import { useDispatch, useSelector } from 'react-redux';
+import { getContacts, getFilter } from '../../redux/selectors';
+import { deleteContact } from '../../redux/contactsSlice';
 
-export const Contacts = ({ contacts, onRemove }) => (
-  <List>
-    {contacts.map(contact => (
-      <Listitem key={contact.id}>
-        {contact.name + ' : ' + contact.number}
-        {
-          <Listbutton
-            type="button"
-            name="delete"
-            onClick={() => onRemove(contact.id)}
-          >
-            delete
-          </Listbutton>
-        }
-      </Listitem>
-    ))}
-  </List>
-);
+export const Contacts = () => {
+  const contacts = useSelector(getContacts);
 
-Contacts.propTypes = {
-  contacts: PropTypes.array.isRequired,
-  onRemove: PropTypes.func.isRequired,
+  const filters = useSelector(getFilter);
+
+  const dispatch = useDispatch();
+
+  const getVisibleContacts = () => {
+    contacts.filter(contact =>
+      contact.name.toLowerCase().includes(filters.toLowerCase())
+    );
+  };
+  const VisibleContacts = getVisibleContacts();
+
+  const handleDelete = contactId => {
+    dispatch(deleteContact(contactId));
+  };
+  return (
+    <List>
+      {VisibleContacts.map(contact => (
+        <Listitem key={contact.id}>
+          {contact.name + ' : ' + contact.number}
+          {
+            <Listbutton
+              type="button"
+              name="delete"
+              onClick={() => handleDelete(contact.id)}
+            >
+              delete
+            </Listbutton>
+          }
+        </Listitem>
+      ))}
+    </List>
+  );
 };
