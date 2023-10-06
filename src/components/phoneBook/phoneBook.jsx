@@ -13,7 +13,7 @@ export const PhoneBook = () => {
 
   const checkDublicate = name => {
     if (
-      contacts.some(
+      contacts.contacts.some(
         contact => contact.name.toLowerCase() === name.toLowerCase()
       )
     ) {
@@ -23,8 +23,9 @@ export const PhoneBook = () => {
     }
   };
 
-  const SubmitForm = values => {
-    const { name, number } = values;
+  const submitForm = event => {
+    event.preventDefault();
+    const { name, number } = event.target.elements;
 
     checkDublicate(name);
 
@@ -37,7 +38,7 @@ export const PhoneBook = () => {
   const numberId = nanoid();
 
   return (
-    <Form onSubmit={SubmitForm}>
+    <Form onSubmit={submitForm}>
       <Label htmlFor={nameId}>
         Name
         <Input
