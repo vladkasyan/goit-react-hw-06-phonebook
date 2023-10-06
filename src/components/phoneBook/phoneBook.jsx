@@ -1,10 +1,10 @@
 import { nanoid } from 'nanoid';
 
+import { getContacts } from '../../redux/selectors';
 import { Form, Label, Button, Input } from './phoneBook.module';
 import { addContact } from '../../redux/contactsSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import toast from 'react-hot-toast';
-import { getContacts } from '../../redux/selectors';
 
 export const PhoneBook = () => {
   const contacts = useSelector(getContacts);
