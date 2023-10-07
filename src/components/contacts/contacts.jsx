@@ -12,7 +12,7 @@ export const Contacts = () => {
   const dispatch = useDispatch();
 
   const getVisibleContacts = () => {
-    contacts.filter(contact =>
+    return contacts.filter(contact =>
       contact.name.toLowerCase().includes(filters.toLowerCase())
     );
   };

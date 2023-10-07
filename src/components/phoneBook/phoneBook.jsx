@@ -13,7 +13,7 @@ export const PhoneBook = () => {
 
   const checkDublicate = name => {
     if (
-      contacts.contacts.some(
+      contacts.find(
         contact => contact.name.toLowerCase() === name.toLowerCase()
       )
     ) {
@@ -27,9 +27,9 @@ export const PhoneBook = () => {
     event.preventDefault();
     const { name, number } = event.target.elements;
 
-    checkDublicate(name);
+    checkDublicate(name.value);
 
-    dispatch(addContact(name, number));
+    dispatch(addContact({ name: name.value, number: number.value }));
 
     toast.success(`${name} has succesfully added to your phonebook`);
   };
