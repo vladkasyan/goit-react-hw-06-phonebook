@@ -1,10 +1,28 @@
 import { nanoid } from 'nanoid';
 
 import { getContacts } from '../../redux/selectors';
-import { Form, Label, Button, Input } from './phoneBook.module';
+import { Form, Label, Button, Input, Title } from './phoneBook.module';
 import { addContact } from '../../redux/contactsSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import toast from 'react-hot-toast';
+
+import * as yup from 'yup';
+
+const schema = yup.object().shape({
+  name: yup
+    .string()
+    .matches(/^[a-zA-Zа-яА-Я\s'-]*$/, 'Name should not contain numbers')
+    .required(),
+  number: yup
+    .string()
+    .min(5, 'Too short  phone number')
+    .max(10, 'Too long phone number')
+    .matches(
+      /^\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}$/,
+      'Invalid phone number format'
+    )
+    .required(),
+});
 
 export const PhoneBook = () => {
   const contacts = useSelector(getContacts);
@@ -38,13 +56,13 @@ export const PhoneBook = () => {
   const numberId = nanoid();
 
   return (
-    <Form onSubmit={submitForm}>
+    <Form onSubmit={submitForm} validationSchema={schema}>
+      <Title>Phonebook</Title>
       <Label htmlFor={nameId}>
         Name
         <Input
           type="text"
           name="name"
-          pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
           title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
           // value={name}
           // onChange={ChangeForm}
@@ -57,7 +75,6 @@ export const PhoneBook = () => {
         <Input
           type="tel"
           name="number"
-          pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
           title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
           // value={number}
           // onChange={ChangeForm}

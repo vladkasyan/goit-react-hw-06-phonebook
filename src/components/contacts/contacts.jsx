@@ -26,6 +26,7 @@ export const Contacts = () => {
       {VisibleContacts.map(contact => (
         <Listitem key={contact.id}>
           {contact.name + ' : ' + contact.number}
+
           {
             <Listbutton
               type="button"

@@ -1,4 +1,6 @@
-import React, { useEffect } from 'react';
+import React from 'react';
+
+import { Body, Placeholder } from './App.module';
 
 import { PhoneBook } from './phoneBook/phoneBook';
 import { Contacts } from './contacts/contacts';
@@ -12,25 +14,22 @@ export const App = () => {
   const contacts = useSelector(getContacts);
   console.log(contacts);
 
-  useEffect(() => {
-    localStorage.setItem('contacts', JSON.stringify(contacts));
+  // useEffect(() => {
+  //   localStorage.setItem('contacts', JSON.stringify(contacts));
 
-    console.log('contacts', contacts);
-  }, [contacts]);
+  //   console.log('contacts', contacts);
+  // }, [contacts]);
 
   return (
-    <div>
-      <h1>Phonebook</h1>
-
+    <Body>
       <PhoneBook />
 
-      <h2>Contacts</h2>
       {!!contacts.length ? (
         <Filter />
       ) : (
-        <div>Your phonebook is empty. Add first contact!</div>
+        <Placeholder>Your phonebook is empty. Add first contact!</Placeholder>
       )}
       {!!contacts.length && <Contacts />}
-    </div>
+    </Body>
   );
 };

@@ -1,7 +1,8 @@
 import React from 'react';
-import { Label, Input } from './filter.module';
+import { Label, Input, Box, Title } from './filter.module';
 import { useDispatch, useSelector } from 'react-redux';
 import { getContacts, getFilter } from '../../redux/selectors';
+import { setFilter } from '../../redux/filtersSlice';
 
 export const Filter = () => {
   const filters = useSelector(getFilter);
@@ -11,11 +12,12 @@ export const Filter = () => {
   const dispatch = useDispatch();
 
   const filterChange = e => {
-    dispatch(filters(e.target.value));
+    dispatch(setFilter(e.target.value));
   };
 
   return (
-    <div>
+    <Box>
+      <Title>Contacts</Title>
       <Label>
         Find contacts by name
         <Input
@@ -25,6 +27,6 @@ export const Filter = () => {
           disabled={contacts.length === 0}
         />
       </Label>
-    </div>
+    </Box>
   );
 };
