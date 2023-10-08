@@ -1,6 +1,7 @@
+// import { Field, Form } from 'formik';
 import styled from 'styled-components';
 
-export const Form = styled.form`
+export const Forms = styled.form`
   display: flex;
   flex-direction: column;
   padding: 12px 14px;

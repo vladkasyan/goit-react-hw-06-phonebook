@@ -21,7 +21,8 @@ export const Body = styled.div`
     }
   }
   padding-top: 20px;
-  padding-bottom: 220px;
+  height: 100%;
+  padding-bottom: 309px;
 `;
 
 export const Placeholder = styled.div`
