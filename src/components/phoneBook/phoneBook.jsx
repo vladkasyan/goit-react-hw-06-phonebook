@@ -56,7 +56,7 @@ export const PhoneBook = () => {
   const numberId = nanoid();
 
   return (
-    <Form onSubmit={submitForm} validationSchema={schema}>
+    <Form onSubmit={submitForm} validationschema={schema}>
       <Title>Phonebook</Title>
       <Label htmlFor={nameId}>
         Name

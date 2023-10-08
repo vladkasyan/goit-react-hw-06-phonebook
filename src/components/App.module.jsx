@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const Body = styled.body`
+export const Body = styled.div`
   background: linear-gradient(
     90deg,
     rgba(23, 18, 110, 1) 0%,
@@ -21,7 +21,7 @@ export const Body = styled.body`
     }
   }
   padding-top: 20px;
-  padding-bottom: 600px;
+  padding-bottom: 220px;
 `;
 
 export const Placeholder = styled.div`

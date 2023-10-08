@@ -12,7 +12,6 @@ export const App = () => {
   // const savedcontacts = JSON.parse(localStorage.getItem('contacts'));
 
   const contacts = useSelector(getContacts);
-  console.log(contacts);
 
   // useEffect(() => {
   //   localStorage.setItem('contacts', JSON.stringify(contacts));
