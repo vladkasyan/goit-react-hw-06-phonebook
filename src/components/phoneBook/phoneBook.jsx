@@ -57,6 +57,7 @@ export const PhoneBook = () => {
       `${name.value} has succesfully added to your phonebook`,
       toastOptions
     );
+    event.target.resetForm();
   };
 
   const nameId = nanoid();
